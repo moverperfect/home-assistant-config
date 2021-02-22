@@ -1,0 +1,79 @@
+substitutions:
+  mqtt_password: !secret mqtt_password
+  mqtt_channel: !secret living_room_mqtt_channel
+  mqtt_api: !secret living_room_mqtt_api
+  tv_ip_address: !secret tv_ip_address
+
+esphome:
+  name: living_room
+  platform: ESP8266
+  board: nodemcuv2
+  includes:
+    - temp_mqtt.h
+    - Ping.h
+  libraries:
+    - "DHT sensor library"
+    - "PubSubClient"
+    - "ESP8266Ping"
+    - "Adafruit Unified Sensor"
+
+wifi:
+  ssid: !secret wifi_ssid_1
+  password: !secret wifi_pwd_1
+  #use_address: nodemcu_1.local
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Nodemcu 1 Fallback Hotspot"
+    password: !secret fallback_pwd
+
+captive_portal:
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  password: !secret ha_api_pwd
+
+ota:
+  password: !secret ota_api_pwd
+    
+web_server:
+  port: 80
+
+sensor:
+- platform: custom
+  lambda: |-
+    auto my_sensor = new MyCustomSensor();
+    my_sensor->mqttPassword = (char*)"$mqtt_password";
+    my_sensor->mqttChannel = "$mqtt_channel";
+    my_sensor->apikey = "$mqtt_api";
+    App.register_component(my_sensor);
+    return {my_sensor->temperature_sensor, my_sensor->humidity_sensor, my_sensor->heat_index};
+
+  sensors:
+  - name: "Living Room Temperature"
+    unit_of_measurement: "°C"
+    accuracy_decimals: 1
+  - name: "Living Room Humidity"
+    unit_of_measurement: "%"
+    accuracy_decimals: 1
+  - name: "Living Room Heat Index"
+    unit_of_measurement: "°C"
+    accuracy_decimals: 1
+
+binary_sensor:
+  - platform: custom
+    lambda: |-
+      auto my_custom_sensor = new PingSensor();
+      uint8_t ipAddress[4] = $tv_ip_address;
+      my_custom_sensor->ipAddress[0] = ipAddress[0];
+      my_custom_sensor->ipAddress[1] = ipAddress[1];
+      my_custom_sensor->ipAddress[2] = ipAddress[2];
+      my_custom_sensor->ipAddress[3] = ipAddress[3];
+      App.register_component(my_custom_sensor);
+      return {my_custom_sensor};
+
+    binary_sensors:
+      name: "Living Room TV"

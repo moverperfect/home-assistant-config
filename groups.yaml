@@ -1,0 +1,6 @@
+battery_levels:
+  name: Battery Levels
+  entities:
+    - sensor.unknown_host_battery_level
+    - sensor.hue_dimmer_switch_1_battery_level
+    - sensor.iphone_battery_level
