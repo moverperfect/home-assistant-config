@@ -4,7 +4,7 @@ default_config:
 # Text to speech
 tts:
   - platform: google_translate
-    language: 'en-uk'
+    language: 'en'
   
 # flux
 switch:
