@@ -31,6 +31,8 @@ captive_portal:
 
 # Enable logging
 logger:
+  level: !secret debug_level
+  esp8266_store_log_strings_in_flash: !secret debug_esp8266_store_log_strings_in_flash
 
 # Enable Home Assistant API
 api:
