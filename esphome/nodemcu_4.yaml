@@ -1,10 +1,26 @@
+#
+# garage (nodemcu_2): Garage temperature sensor
+# 
+# This ESPHome code is used on a nodemcu esp8266.
+# It does temperature sensing in the Garage
+#
+# It has 3 outputs:
+# Garage Temperature
+# Garage Humidity
+# Garage Heat Index
+#
+# Climate sensing is done by a DHT22 and handled by a custom sensor every 60 seconds,
+# data is also uploaded to Thingspeak
+#
 substitutions:
+  devicename: "garage"
+  upper_devicename: "Garage"
   mqtt_password: !secret mqtt_password
   mqtt_channel: !secret garage_mqtt_channel
   mqtt_api: !secret garage_mqtt_api
   
 esphome:
-  name: garage
+  name: $devicename
   platform: ESP8266
   board: nodemcuv2
   includes:
@@ -17,11 +33,10 @@ esphome:
 wifi:
   ssid: !secret wifi_ssid_1
   password: !secret wifi_pwd_1
-  #use_address: nodemcu_4.local
 
   # Enable fallback hotspot (captive portal) in case wifi connection fails
   ap:
-    ssid: "Nodemcu 4 Fallback Hotspot"
+    ssid: "$upper_devicename Fallback Hotspot"
     password: !secret fallback_pwd
 
 captive_portal:
@@ -52,15 +67,15 @@ sensor:
     return {my_sensor->temperature_sensor, my_sensor->humidity_sensor, my_sensor->heat_index};
 
   sensors:
-  - name: "Garage Temperature"
+  - name: "$upper_devicename Temperature"
     unit_of_measurement: "°C"
     accuracy_decimals: 1
     icon: "mdi:thermometer"
-  - name: "Garage Humidity"
+  - name: "$upper_devicename Humidity"
     unit_of_measurement: "%"
     accuracy_decimals: 1
     icon: mdi:water-percent
-  - name: "Garage Heat Index"
+  - name: "$upper_devicename Heat Index"
     unit_of_measurement: "°C"
     accuracy_decimals: 1
     icon: "mdi:thermometer"

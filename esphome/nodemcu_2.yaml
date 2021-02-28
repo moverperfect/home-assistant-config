@@ -1,10 +1,26 @@
+#
+# den (nodemcu_2): Den temperature sensor
+# 
+# This ESPHome code is used on a nodemcu esp8266.
+# It does temperature sensing in the Den
+#
+# It has 3 outputs:
+# Den Temperature
+# Den Humidity
+# Den Heat Index
+#
+# Climate sensing is done by a DHT22 and handled by a custom sensor every 60 seconds,
+# data is also uploaded to Thingspeak
+#
 substitutions:
+  devicename: "den"
+  upper_devicename: "Den"
   mqtt_password: !secret mqtt_password
   mqtt_channel: !secret den_mqtt_channel
   mqtt_api: !secret den_mqtt_api
 
 esphome:
-  name: den
+  name: $devicename
   platform: ESP8266
   board: nodemcuv2
   includes:
@@ -17,11 +33,10 @@ esphome:
 wifi:
   ssid: !secret wifi_ssid_1
   password: !secret wifi_pwd_1
-  #use_address: nodemcu_2.local
 
   # Enable fallback hotspot (captive portal) in case wifi connection fails
   ap:
-    ssid: 'Nodemcu 2 Fallback Hotspot'
+    ssid: '$upper_devicename Fallback Hotspot'
     password: !secret fallback_pwd
 
 captive_portal:
@@ -52,15 +67,15 @@ sensor:
     return {my_sensor->temperature_sensor, my_sensor->humidity_sensor, my_sensor->heat_index};
     
   sensors:
-  - name: 'Den Temperature'
+  - name: '$upper_devicename Temperature'
     unit_of_measurement: '°C'
     accuracy_decimals: 1
     icon: "mdi:thermometer"
-  - name: 'Den Humidity'
+  - name: '$upper_devicename Humidity'
     unit_of_measurement: '%'
     accuracy_decimals: 1
     icon: mdi:water-percent
-  - name: 'Den Heat Index'
+  - name: '$upper_devicename Heat Index'
     unit_of_measurement: '°C'
     accuracy_decimals: 1
     icon: "mdi:thermometer"
