@@ -28,7 +28,7 @@
     entity_id: media_player.living_room_speaker
   mode: single
 - id: '1605631963494'
-  alias: Turn the Living Room lights on when the Sun sets
+  alias: Turn on Living Room lights when the Sun sets
   description: ''
   trigger:
   - platform: sun
@@ -53,7 +53,7 @@
       kelvin: 5000
   mode: single
 - id: '1606954991169'
-  alias: Turn on Living Room at 6:55am unless sun has risen
+  alias: Turn on Living Room at 6:20am unless sun has risen
   description: ''
   trigger:
   - platform: time
@@ -78,7 +78,7 @@
       kelvin: 5000
   mode: single
 - id: '1607012698226'
-  alias: Turn off living room lights at 9am if TV is off
+  alias: Turn off Living Room lights at 9am if TV is off
   description: ''
   trigger:
   - platform: time
@@ -111,7 +111,7 @@
     type: turn_off
   mode: single
 - id: notify_if_batteries_are_low
-  alias: Notification- Alert That Batteries Are Low
+  alias: Notification - Alert That Batteries Are Low
   trigger:
   - platform: time
     at: '19:00:00'
@@ -134,7 +134,7 @@
         {%- endfor -%}\n"
   mode: single
 - id: '1608594217891'
-  alias: Turn off the living room lights at midnight if TV is off
+  alias: Turn off Living Room lights at midnight if TV is off
   description: ''
   trigger:
   - platform: time
