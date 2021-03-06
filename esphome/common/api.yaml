@@ -1,0 +1,4 @@
+---
+api:
+  password: !secret ha_api_pwd
+...

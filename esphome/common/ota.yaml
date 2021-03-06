@@ -1,0 +1,4 @@
+---
+ota:
+  password: !secret ota_api_pwd
+...
