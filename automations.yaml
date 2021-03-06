@@ -123,7 +123,9 @@
         \ -%} {% for entity_id in states.group.battery_levels.attributes.entity_id\
         \ -%}\n  {% set parts = entity_id.split('.') -%}\n  {% if (states(entity_id)\
         \ | replace(\"%\",\"\") | int) < min_battery_level -%}\n    {% set ns.found\
-        \ = true -%}\n  {% endif -%}\n{% endfor -%} {{ ns.found }}\n"
+        \ = true -%}\n  {% endif -%}\n  {%- if as_timestamp(states[parts[0]][parts[1]].last_updated)\
+        \ < (as_timestamp(now()) - 172500) -%}\n        {% set ns.found = true -%}\n\
+        \   {%- endif -%}\n{% endfor -%} {{ ns.found }}\n"
   action:
   - service: notify.mobile_app_oneplus_a6013
     data_template:
@@ -131,7 +133,9 @@
         \ -%}\n  {%- set parts = entity_id.split('.') -%}\n  {%- if (states(entity_id)\
         \ | replace(\"%\",\"\") | int) < min_battery_level -%}\n    {{ states[parts[0]][parts[1]].name\
         \ }} battery level is {{ states(entity_id) }}.{{ '\\n' }}\n  {%- endif -%}\n\
-        {%- endfor -%}\n"
+        \  {%- if as_timestamp(states[parts[0]][parts[1]].last_updated) < (as_timestamp(now())\
+        \ - 172500) -%}\n    {{ states[parts[0]][parts[1]].name }} battery is out\
+        \ of date.{{ '\\n' }}\n  {%- endif -%}\n{%- endfor -%}\n"
   mode: single
 - id: '1608594217891'
   alias: Turn off Living Room lights at midnight if TV is off
