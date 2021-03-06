@@ -38,7 +38,6 @@ zwscene.xml
 
 # ESPHome ignores
 esphome/secrets.yaml
-esphome/**/
 
 # Ignore add-on files
 aircast.xml
