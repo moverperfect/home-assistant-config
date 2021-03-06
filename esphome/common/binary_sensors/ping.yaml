@@ -1,0 +1,14 @@
+---
+platform: custom
+lambda: |-
+  auto my_custom_sensor = new PingSensor();
+  uint8_t ipAddress[4] = $tv_ip_address;
+  my_custom_sensor->ipAddress[0] = ipAddress[0];
+  my_custom_sensor->ipAddress[1] = ipAddress[1];
+  my_custom_sensor->ipAddress[2] = ipAddress[2];
+  my_custom_sensor->ipAddress[3] = ipAddress[3];
+  App.register_component(my_custom_sensor);
+  return {my_custom_sensor};
+
+binary_sensors:
+  name: "$upper_devicename TV"
