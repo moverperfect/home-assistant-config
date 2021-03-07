@@ -39,3 +39,6 @@ sensor:
 
 binary_sensor:
 - !include common/binary_sensors/status.yaml
+
+switch:
+- !include common/switch/restart.yaml
