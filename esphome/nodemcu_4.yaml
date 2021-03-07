@@ -36,3 +36,6 @@ esphome:
 sensor:
 - !include common/sensor/dht22.yaml
 - !include common/sensor/uptime.yaml
+
+binary_sensor:
+- !include common/binary_sensors/status.yaml
