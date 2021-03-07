@@ -1,0 +1,8 @@
+---
+platform: wifi_info
+ip_address:
+  name: ${upper_devicename} IP Address
+ssid:
+  name: ${upper_devicename} SSID
+bssid:
+  name: ${upper_devicename} BSSID
