@@ -49,3 +49,6 @@ binary_sensor:
 
 switch:
 - !include common/switch/restart.yaml
+
+text_sensor:
+- !include common/text_sensor/version.yaml
