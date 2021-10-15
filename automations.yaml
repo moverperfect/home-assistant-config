@@ -3,7 +3,7 @@
   description: ''
   trigger:
   - platform: time
-    at: 05:00:00
+    at: 05:00
   condition: []
   action:
   - service: media_player.volume_set
@@ -21,11 +21,13 @@
   - service: media_player.volume_set
     data:
       volume_level: 0.2
-    entity_id: media_player.kitchen_speaker
+    target:
+      entity_id: media_player.living_room_big
   - service: media_player.volume_set
     data:
       volume_level: 0.2
-    entity_id: media_player.living_room_speaker
+    target:
+      entity_id: media_player.living_room_little
   mode: single
 - id: '1605631963494'
   alias: Turn on Living Room lights when the Sun sets
@@ -168,7 +170,7 @@
   description: ''
   trigger:
   - platform: time
-    at: '10:00:00'
+    at: '10:00'
   condition:
   - condition: time
     weekday:
@@ -182,5 +184,41 @@
     entity_id:
     - switch.kettle
     - switch.my_charger
-    - switch.bedroom_lamp
+  - service: light.turn_off
+    target:
+      entity_id: light.bedroom_lamp
+  mode: single
+- id: '1621130823320'
+  alias: Remind Jack to Fill Account for OddBox
+  description: ''
+  trigger:
+  - platform: time
+    at: '17:30:00'
+  condition:
+  - condition: time
+    weekday:
+    - thu
+  - condition: template
+    value_template: '{{(as_timestamp(now())|timestamp_custom (''%U'') | int % 2) ==
+      1 }}'
+  action:
+  - service: notify.mobile_app_oneplus_a6013
+    data:
+      message: Oddbox £10.99
+      title: Oddbox £10.99
+  mode: single
+- id: '1625146225131'
+  alias: Remind Jack to Fill account for Spotify
+  description: ''
+  trigger:
+  - platform: time
+    at: '17:30:00'
+  condition:
+  - condition: template
+    value_template: '{{(as_timestamp(now())|timestamp_custom (''%d'')) == "27" }}'
+  action:
+  - service: notify.mobile_app_oneplus_a6013
+    data:
+      message: Spotify 13.99
+      title: Spotify 13.99
   mode: single
