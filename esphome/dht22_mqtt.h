@@ -108,7 +108,7 @@ public:
         heat_index->publish_state(hic);
 
         // If mqtt reconnect successful then publish to MQTT
-        if (reconnect())
+        if (mqttChannel != "" && reconnect())
         {
             // Assemble dht22 values ready for publish
             String total_string = "field1=" + String(t, 1) + "&field2=" + String(h, 1) + "&field3=" + String(hic, 1);
